@@ -1,2 +1,2 @@
 # SoftBill
-Billg Software
+Billing Software
