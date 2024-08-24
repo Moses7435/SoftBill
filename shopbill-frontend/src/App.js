@@ -1,7 +1,5 @@
-// src/App.js
-
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProductList from './components/ProductList';
 import ProductForm from './components/ProductForm';
 
@@ -10,10 +8,10 @@ function App() {
         <Router>
             <div>
                 <h1>Billing Software</h1>
-                <Switch>
-                    <Route path="/products" component={ProductList} />
-                    <Route path="/add-product" component={ProductForm} />
-                </Switch>
+                <Routes>
+                    <Route path="/products" element={<ProductList />} />
+                    <Route path="/add-product" element={<ProductForm />} />
+                </Routes>
             </div>
         </Router>
     );
