@@ -1,15 +1,17 @@
-// routes/productRoutes.js
-
 const express = require('express');
 const router = express.Router();
-const ProductController = require('../controllers/ProductController.js');
+const productController = require('../controllers/productController'); // Ensure this path is correct
 
-// Route to create a new product
-router.post('/products', ProductController.createProduct);
+// Get all products
+router.get('/products', productController.getAllProducts);
 
-// Route to get all products
-router.get('/products', ProductController.getProducts);
+// Add a new product
+router.post('/products', productController.addProduct);
 
-// Add more routes as needed...
+// Update a product
+router.put('/products/:id', productController.updateProduct);
+
+// Delete a product
+router.delete('/products/:id', productController.deleteProduct);
 
 module.exports = router;

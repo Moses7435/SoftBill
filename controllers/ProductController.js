@@ -1,5 +1,3 @@
-// controllers/productController.js
-
 const Product = require('../models/product');
 
 // Get all products
@@ -23,6 +21,27 @@ exports.addProduct = async (req, res) => {
     }
 };
 
+// Update a product
+exports.updateProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, price, stock } = req.body;
+        const product = await Product.findByPk(id);
+        if (product) {
+            product.name = name;
+            product.price = price;
+            product.stock = stock;
+            await product.save();
+            res.json(product);
+        } else {
+            res.status(404).json({ error: 'Product not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while updating the product.' });
+    }
+};
+
+// Delete a product
 exports.deleteProduct = async (req, res) => {
     try {
         const { id } = req.params;
