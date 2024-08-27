@@ -1,32 +1,48 @@
-// LoginPage.js
 import React, { useState } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
 
-const LoginPage = () => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle login logic here
+        // Add logic to handle login here
     };
 
     return (
-        <Container className="mt-5">
-            <h2>Login</h2>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="formEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                </Form.Group>
-                <Form.Group controlId="formPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                </Form.Group>
-                <Button variant="primary" type="submit" className="mt-3">Login</Button>
-            </Form>
-        </Container>
+        <div className="container my-5">
+            <h1 className="text-center mb-4">Login</h1>
+            <div className="row justify-content-center">
+                <div className="col-lg-6">
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">Email address</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Password</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary w-100">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     );
 };
 
-export default LoginPage;
+export default Login;

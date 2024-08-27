@@ -1,17 +1,17 @@
-// app.js
-
 const express = require('express');
+const path = require('path');
 const app = express();
-const productRoutes = require('./routes/productRoutes');
 
-// Middleware to parse JSON request bodies
-app.use(express.json());
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Use the product routes
-app.use('/api', productRoutes);
+// Route for homepage
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
