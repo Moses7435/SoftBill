@@ -2,7 +2,7 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 
-const Dashboard = () => {
+function Dashboard() {
     return (
         <Container className="mt-5">
             <h2>Dashboard</h2>
@@ -34,9 +34,37 @@ const Dashboard = () => {
                         </Card.Body>
                     </Card>
                 </Col>
+                {/* Additional cards for other pages */}
+                <Col md={4}>
+                    <Card className="mb-4">
+                        <Card.Body>
+                            <Card.Title>Manage Customers</Card.Title>
+                            <Card.Text>Add, edit, or view customer details.</Card.Text>
+                            <Card.Link href="/customers">Go to Customers</Card.Link>
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={4}>
+                    <Card className="mb-4">
+                        <Card.Body>
+                            <Card.Title>Settings</Card.Title>
+                            <Card.Text>Configure your application settings.</Card.Text>
+                            <Card.Link href="/settings">Go to Settings</Card.Link>
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={4}>
+                    <Card className="mb-4">
+                        <Card.Body>
+                            <Card.Title>Profile</Card.Title>
+                            <Card.Text>View and edit your profile information.</Card.Text>
+                            <Card.Link href="/profile">Go to Profile</Card.Link>
+                        </Card.Body>
+                    </Card>
+                </Col>
             </Row>
         </Container>
     );
-};
+}
 
 export default Dashboard;

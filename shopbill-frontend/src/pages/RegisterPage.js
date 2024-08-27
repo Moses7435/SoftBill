@@ -1,15 +1,21 @@
 // RegisterPage.js
 import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 const RegisterPage = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle registration logic here
+        try {
+            const res = await axios.post('/register', { name, email, password });
+            alert(res.data.message);
+        } catch (err) {
+            alert('Failed to register.');
+        }
     };
 
     return (
