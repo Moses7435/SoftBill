@@ -12,6 +12,7 @@ import About from './pages/About';
 import Login from './pages/Login';
 import RegisterPage from './pages/RegisterPage';
 import Dashboard from './pages/Dashboard';
+import CreateBill from './pages/CreateBill';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/create-bill" element={<CreateBill />} />
       </Routes>
     </Router>
   );

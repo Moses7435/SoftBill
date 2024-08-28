@@ -7,8 +7,11 @@ const authRoutes = require('./routes/authRoutes');
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('ShopBill API');
+app.use(express.static(path.join(__dirname, 'shopbill-frontend/build')));
+
+// Handle React routing, return all requests to React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'shopbill-frontend/build', 'index.html'));
 });
 
 app.use('/auth', authRoutes);
