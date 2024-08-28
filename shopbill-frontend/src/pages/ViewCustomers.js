@@ -1,39 +1,33 @@
-// ViewCustomers.js
-import React from 'react';
-import { Container, Table } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const ViewCustomers = () => {
-    const customers = [
-        { id: 1, name: 'John Doe', email: 'john@example.com', phone: '123-456-7890' },
-        { id: 2, name: 'Jane Smith', email: 'jane@example.com', phone: '098-765-4321' },
-        // Add more customers as needed
-    ];
+function ViewCustomers() {
+    const [customers, setCustomers] = useState([]);
+
+    useEffect(() => {
+        const fetchCustomers = async () => {
+            try {
+                const response = await axios.get('/api/customers');
+                setCustomers(response.data);
+            } catch (error) {
+                console.error('There was an error fetching the customers!', error);
+            }
+        };
+        fetchCustomers();
+    }, []);
 
     return (
-        <Container className="mt-5">
-            <h2>View Customers</h2>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {customers.map(customer => (
-                        <tr key={customer.id}>
-                            <td>{customer.id}</td>
-                            <td>{customer.name}</td>
-                            <td>{customer.email}</td>
-                            <td>{customer.phone}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-        </Container>
+        <div className="container mt-5">
+            <h2>All Customers</h2>
+            <ul className="list-group">
+                {customers.map((customer, index) => (
+                    <li key={index} className="list-group-item">
+                        {customer.name} - {customer.email}
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
-};
+}
 
 export default ViewCustomers;

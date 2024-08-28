@@ -1,33 +1,29 @@
-// Profile.js
-import React from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const Profile = () => {
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Handle profile update logic here
-    };
+function Profile() {
+    const [profile, setProfile] = useState({});
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const response = await axios.get('/api/profile');
+                setProfile(response.data);
+            } catch (error) {
+                console.error('There was an error fetching the profile data!', error);
+            }
+        };
+        fetchProfile();
+    }, []);
 
     return (
-        <Container className="mt-5">
+        <div className="container mt-5">
             <h2>Profile</h2>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="formUserName">
-                    <Form.Label>Full Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter your name" required />
-                </Form.Group>
-                <Form.Group controlId="formUserEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter your email" required />
-                </Form.Group>
-                <Form.Group controlId="formUserPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Enter new password" required />
-                </Form.Group>
-                <Button variant="primary" type="submit" className="mt-3">Update Profile</Button>
-            </Form>
-        </Container>
+            <p><strong>Name:</strong> {profile.name}</p>
+            <p><strong>Email:</strong> {profile.email}</p>
+            <p><strong>Joined:</strong> {profile.joinedDate}</p>
+        </div>
     );
-};
+}
 
 export default Profile;

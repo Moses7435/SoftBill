@@ -1,41 +1,33 @@
-// DailySalesReport.js
-import React from 'react';
-import { Container, Table } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const DailySalesReport = () => {
-    const sales = [
-        { id: 1, product: 'Product A', quantity: 2, total: 100, date: '2024-08-23' },
-        { id: 2, product: 'Product B', quantity: 1, total: 30, date: '2024-08-23' },
-        // Add more sales as needed
-    ];
+function DailySalesReport() {
+    const [sales, setSales] = useState([]);
+
+    useEffect(() => {
+        const fetchSales = async () => {
+            try {
+                const response = await axios.get('/api/reports/daily-sales');
+                setSales(response.data);
+            } catch (error) {
+                console.error('There was an error fetching the daily sales report!', error);
+            }
+        };
+        fetchSales();
+    }, []);
 
     return (
-        <Container className="mt-5">
+        <div className="container mt-5">
             <h2>Daily Sales Report</h2>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {sales.map(sale => (
-                        <tr key={sale.id}>
-                            <td>{sale.id}</td>
-                            <td>{sale.product}</td>
-                            <td>{sale.quantity}</td>
-                            <td>{sale.total}</td>
-                            <td>{sale.date}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-        </Container>
+            <ul className="list-group">
+                {sales.map((sale, index) => (
+                    <li key={index} className="list-group-item">
+                        {sale.date} - Total Sales: ${sale.totalSales}
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
-};
+}
 
 export default DailySalesReport;

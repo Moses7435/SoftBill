@@ -1,39 +1,33 @@
-// ViewBills.js
-import React from 'react';
-import { Container, Table } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const ViewBills = () => {
-    const bills = [
-        { id: 1, customer: 'John Doe', total: 100, date: '2024-08-23' },
-        { id: 2, customer: 'Jane Smith', total: 150, date: '2024-08-24' },
-        // Add more bills as needed
-    ];
+function ViewBills() {
+    const [bills, setBills] = useState([]);
+
+    useEffect(() => {
+        const fetchBills = async () => {
+            try {
+                const response = await axios.get('/api/bills');
+                setBills(response.data);
+            } catch (error) {
+                console.error('There was an error fetching the bills!', error);
+            }
+        };
+        fetchBills();
+    }, []);
 
     return (
-        <Container className="mt-5">
-            <h2>View Bills</h2>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Customer</th>
-                        <th>Total</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {bills.map(bill => (
-                        <tr key={bill.id}>
-                            <td>{bill.id}</td>
-                            <td>{bill.customer}</td>
-                            <td>{bill.total}</td>
-                            <td>{bill.date}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-        </Container>
+        <div className="container mt-5">
+            <h2>All Bills</h2>
+            <ul className="list-group">
+                {bills.map((bill, index) => (
+                    <li key={index} className="list-group-item">
+                        <a href={`/bills/${bill.id}`}>Bill #{bill.id}</a> - ${bill.totalAmount}
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
-};
+}
 
 export default ViewBills;

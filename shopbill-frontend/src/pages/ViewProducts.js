@@ -1,39 +1,33 @@
-// ViewProducts.js
-import React from 'react';
-import { Container, Table } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const ViewProducts = () => {
-    const products = [
-        { id: 1, name: 'Product A', price: 50, stock: 20 },
-        { id: 2, name: 'Product B', price: 30, stock: 10 },
-        // Add more products as needed
-    ];
+function ViewProducts() {
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get('/api/products');
+                setProducts(response.data);
+            } catch (error) {
+                console.error('There was an error fetching the products!', error);
+            }
+        };
+        fetchProducts();
+    }, []);
 
     return (
-        <Container className="mt-5">
-            <h2>View Products</h2>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Stock</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products.map(product => (
-                        <tr key={product.id}>
-                            <td>{product.id}</td>
-                            <td>{product.name}</td>
-                            <td>{product.price}</td>
-                            <td>{product.stock}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-        </Container>
+        <div className="container mt-5">
+            <h2>All Products</h2>
+            <ul className="list-group">
+                {products.map((product, index) => (
+                    <li key={index} className="list-group-item">
+                        {product.name} - ${product.price} - {product.quantity} in stock
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
-};
+}
 
 export default ViewProducts;

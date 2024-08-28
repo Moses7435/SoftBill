@@ -5,14 +5,14 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send('ShopBill API');
 });
 
-app.use('/api', authRoutes);
+app.use('/auth', authRoutes);
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });

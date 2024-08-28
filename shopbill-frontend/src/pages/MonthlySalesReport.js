@@ -1,37 +1,33 @@
-// MonthlySalesReport.js
-import React from 'react';
-import { Container, Table } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const MonthlySalesReport = () => {
-    const sales = [
-        { id: 1, month: 'August', totalSales: 2000 },
-        { id: 2, month: 'July', totalSales: 1800 },
-        // Add more monthly sales data as needed
-    ];
+function MonthlySalesReport() {
+    const [sales, setSales] = useState([]);
+
+    useEffect(() => {
+        const fetchSales = async () => {
+            try {
+                const response = await axios.get('/api/reports/monthly-sales');
+                setSales(response.data);
+            } catch (error) {
+                console.error('There was an error fetching the monthly sales report!', error);
+            }
+        };
+        fetchSales();
+    }, []);
 
     return (
-        <Container className="mt-5">
+        <div className="container mt-5">
             <h2>Monthly Sales Report</h2>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Month</th>
-                        <th>Total Sales</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {sales.map(sale => (
-                        <tr key={sale.id}>
-                            <td>{sale.id}</td>
-                            <td>{sale.month}</td>
-                            <td>{sale.totalSales}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-        </Container>
+            <ul className="list-group">
+                {sales.map((sale, index) => (
+                    <li key={index} className="list-group-item">
+                        {sale.month} - Total Sales: ${sale.totalSales}
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
-};
+}
 
 export default MonthlySalesReport;

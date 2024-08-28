@@ -1,37 +1,33 @@
-// CustomerReport.js
-import React from 'react';
-import { Container, Table } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const CustomerReport = () => {
-    const customers = [
-        { id: 1, name: 'John Doe', totalSpent: 500 },
-        { id: 2, name: 'Jane Smith', totalSpent: 750 },
-        // Add more customer data as needed
-    ];
+function CustomerReport() {
+    const [report, setReport] = useState([]);
+
+    useEffect(() => {
+        const fetchReport = async () => {
+            try {
+                const response = await axios.get('/api/reports/customer');
+                setReport(response.data);
+            } catch (error) {
+                console.error('There was an error fetching the customer report!', error);
+            }
+        };
+        fetchReport();
+    }, []);
 
     return (
-        <Container className="mt-5">
+        <div className="container mt-5">
             <h2>Customer Report</h2>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Customer</th>
-                        <th>Total Spent</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {customers.map(customer => (
-                        <tr key={customer.id}>
-                            <td>{customer.id}</td>
-                            <td>{customer.name}</td>
-                            <td>{customer.totalSpent}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-        </Container>
+            <ul className="list-group">
+                {report.map((entry, index) => (
+                    <li key={index} className="list-group-item">
+                        {entry.customerName} - Total Purchases: ${entry.totalPurchases}
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
-};
+}
 
 export default CustomerReport;

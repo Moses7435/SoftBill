@@ -1,38 +1,52 @@
-// AddProduct.js
 import React, { useState } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
+import axios from 'axios';
 
-const AddProduct = () => {
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
-    const [stock, setStock] = useState('');
+function AddProduct() {
+    const [product, setProduct] = useState({
+        name: '',
+        description: '',
+        price: '',
+        quantity: ''
+    });
 
-    const handleSubmit = (e) => {
+    const handleChange = (e) => {
+        setProduct({ ...product, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle product addition logic here
+        try {
+            await axios.post('/api/products', product);
+            alert('Product added successfully');
+        } catch (error) {
+            console.error('There was an error adding the product!', error);
+        }
     };
 
     return (
-        <Container className="mt-5">
+        <div className="container mt-5">
             <h2>Add Product</h2>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="formProductName">
-                    <Form.Label>Product Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter product name" value={name} onChange={(e) => setName(e.target.value)} required />
-                </Form.Group>
-                <Form.Group controlId="formProductPrice">
-                    <Form.Label>Price</Form.Label>
-                    <Form.Control type="number" placeholder="Enter product price" value={price} onChange={(e) => setPrice(e.target.value)} required />
-                    </Form.Group>
-                    <Form.Group controlId="formProductStock">
-                        <Form.Label>Stock Quantity</Form.Label>
-                        <Form.Control type="number" placeholder="Enter stock quantity" value={stock} onChange={(e) => setStock(e.target.value)} required />
-                </Form.Group>
-                <Button variant="success" type="submit" className="mt-3">Add Product</Button>
-            </Form>
-        </Container>
+            <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                    <label className="form-label">Product Name</label>
+                    <input type="text" className="form-control" name="name" value={product.name} onChange={handleChange} required />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Description</label>
+                    <textarea className="form-control" name="description" value={product.description} onChange={handleChange} required></textarea>
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Price</label>
+                    <input type="number" className="form-control" name="price" value={product.price} onChange={handleChange} required />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Quantity</label>
+                    <input type="number" className="form-control" name="quantity" value={product.quantity} onChange={handleChange} required />
+                </div>
+                <button type="submit" className="btn btn-primary">Add Product</button>
+            </form>
+        </div>
     );
-};
+}
 
 export default AddProduct;
-    

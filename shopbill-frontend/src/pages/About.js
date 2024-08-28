@@ -1,16 +1,12 @@
 import React from 'react';
 
-const About = () => {
+function About() {
     return (
-        <div className="container my-5">
-            <h1 className="text-center mb-4">About Us</h1>
-            <p className="text-center">
-                ShopBill is a leading billing software designed to help small businesses manage their shop effortlessly.
-                With our easy-to-use tools, you can keep track of your sales, manage customers, and generate detailed
-                reports to stay on top of your business performance.
-            </p>
+        <div className="container mt-5">
+            <h2>About SoftBill</h2>
+            <p>SoftBill is a comprehensive billing management system designed to streamline your billing processes. With features like product management, customer management, and detailed reports, SoftBill helps you stay on top of your business operations with ease.</p>
         </div>
     );
-};
+}
 
 export default About;
