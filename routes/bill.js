@@ -1,9 +1,8 @@
 // routes/bill.js
-
 const express = require('express');
+const { createBill } = require('../controllers/billController');
 const router = express.Router();
-const billController = require('../controllers/billController');
 
-router.post('/create-bill', billController.createBill);
+router.post('/create-bill', createBill);
 
 module.exports = router;
